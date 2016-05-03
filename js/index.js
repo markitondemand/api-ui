@@ -3,7 +3,9 @@ $(function () {
 	if (url && url.length > 1) {
 		url = decodeURIComponent(url[1]);
 	} else {
-		// get the access token
+		url = window.location.pathname.replace(/\/docs\//gi, '/api-docs')
+
+		// see if there is an access token and append it to the url
 		var accessToken;
 		var arQueryParams = window.location.search.replace('?', '').split('&');
 		if (arQueryParams.length) {
@@ -16,7 +18,7 @@ $(function () {
 
 		if (accessToken) {
 			// set the url
-			url = window.location.pathname.replace(/\/docs\//gi, '/api-docs') + '?' + accessToken;
+			 url += '?' + accessToken;
 		}
 	}
 
