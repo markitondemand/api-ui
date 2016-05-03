@@ -3,7 +3,21 @@ $(function () {
 	if (url && url.length > 1) {
 		url = decodeURIComponent(url[1]);
 	} else {
-		url = window.location.pathname.replace(/\/docs\//gi, '/api-docs');
+		// get the access token
+		var accessToken;
+		var arQueryParams = window.location.search.replace('?', '').split('&');
+		if (arQueryParams.length) {
+			for (var i = 0; i < arQueryParams.length; i++) {
+				if (arQueryParams[i].match(/access_token=/i)) {
+					accessToken = arQueryParams[i];
+				}
+			}
+		}
+
+		if (accessToken) {
+			// set the url
+			url = window.location.pathname.replace(/\/docs\//gi, '/api-docs') + '?' + accessToken;
+		}
 	}
 
 	// Pre load translate...
